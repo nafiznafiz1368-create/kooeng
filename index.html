@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;900&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- RESET & BASE STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f9fa;
+            /* Efek background grid transparan seperti di gambar */
+            background-image: 
+                linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* --- CONTAINER UTAMA --- */
+        .portfolio-card {
+            position: relative;
+            width: 90%;
+            max-width: 1000px;
+            background: transparent;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            align-items: center;
+            gap: 20px;
+            padding: 40px 20px;
+        }
+
+        /* --- WATERMARK / TOP HEADER --- */
+        .watermark {
+            position: absolute;
+            top: 0;
+            left: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #0b3c5d;
+            text-transform: uppercase;
+        }
+
+        /* --- BAGIAN KIRI (TEKS) --- */
+        .hero-text {
+            z-index: 2;
+        }
+
+        .hero-text h1 {
+            font-family: 'League Spartan', sans-serif;
+            font-size: clamp(3.5rem, 8vw, 5.5rem);
+            line-height: 0.85;
+            color: #0b436a; /* Warna Biru Tua */
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 25px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        /* Efek interaktif saat judul di-hover */
+        .hero-text h1:hover {
+            transform: scale(1.02);
+        }
+
+        .name-tag {
+            display: inline-block;
+            background-color: #0b436a;
+            color: #ffffff;
+            padding: 12px 28px;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .name-tag:hover {
+            background-color: #f7b731; /* Berubah kuning saat di-hover */
+            color: #0b436a;
+            transform: translateY(-3px);
+        }
+
+        /* --- BAGIAN KANAN (VISUAL / FOTO) --- */
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 450px;
+        }
+
+        /* Lengkungan Kuning di Belakang */
+        .yellow-arch {
+            position: absolute;
+            bottom: 0;
+            width: 280px;
+            height: 380px;
+            background-color: #f7b733; /* Warna Kuning Terang */
+            border-radius: 140px 140px 0 0;
+            z-index: 1;
+            transition: transform 0.5s ease;
+        }
+
+        /* Frame Foto */
+        .photo-wrapper {
+            position: absolute;
+            bottom: 0;
+            width: 280px;
+            height: 420px;
+            z-index: 2;
+            overflow: visible;
+        }
+
+        /* Foto Utama */
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.15));
+            transition: transform 0.3s ease;
+        }
+
+        .hero-visual:hover .profile-img {
+            transform: scale(1.03);
+        }
+
+        .hero-visual:hover .yellow-arch {
+            transform: rotate(-3deg) scale(1.02);
+        }
+
+        /* --- ELEMEN DEKORASI (GEOMETRIS) --- */
+        .dot-matrix {
+            position: absolute;
+            display: grid;
+            grid-template-columns: repeat(5, 6px);
+            gap: 6px;
+            z-index: 1;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background-color: #0b436a;
+            border-radius: 50%;
+        }
+
+        .dot-matrix-1 {
+            top: 22%;
+            left: -20px;
+        }
+
+        .dot-matrix-2 {
+            bottom: 10%;
+            right: -10px;
+            z-index: 3;
+        }
+
+        /* Sparkles / Bintang Oranye & Hijau */
+        .sparkle {
+            position: absolute;
+            font-size: 24px;
+            font-weight: bold;
+            user-select: none;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .sparkle-orange {
+            color: #ff6b4a;
+            top: 15%;
+            right: 0;
+        }
+
+        .sparkle-green {
+            color: #7bed9f;
+            bottom: 25%;
+            left: -40px;
+            z-index: 3;
+        }
+
+        /* Bulatan Kecil */
+        .circle-deco {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: #f7b733;
+            border-radius: 50%;
+            top: 15%;
+            left: 40%;
+        }
+
+        /* --- ANIMASI AMBIENT --- */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* --- RESPONSIVE UNTUK HP --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 40px 0;
+            }
+            .portfolio-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 50px;
+            }
+            .watermark {
+                left: 50%;
+                transform: translateX(-50%);
+                width: 100%;
+            }
+            .hero-text h1 {
+                font-size: 3.8rem;
+            }
+            .hero-visual {
+                height: 380px;
+            }
+            .yellow-arch {
+                width: 220px;
+                height: 300px;
+                border-radius: 110px 110px 0 0;
+            }
+            .photo-wrapper {
+                width: 220px;
+                height: 340px;
+            }
+            .sparkle-green {
+                left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="portfolio-card">
+        <div class="watermark">©reallygreatsite</div>
+
+        <div class="hero-text">
+            <h1 id="main-title">Creative<br>Portfolio</h1>
+            <button class="name-tag" id="cta-btn">Morgan Maxwell</button>
+        </div>
+
+        <div class="hero-visual">
+            <div class="circle-deco"></div>
+            
+            <div class="sparkle sparkle-orange">✦</div>
+            
+            <div class="dot-matrix dot-matrix-1" id="matrix-1"></div>
+
+            <div class="yellow-arch"></div>
+
+            <div class="photo-wrapper">
+                <img src="nafiz.png" alt="Profile" class="profile-img">
+            </div>
+
+            <div class="sparkle sparkle-green">✦</div>
+
+            <div class="dot-matrix dot-matrix-2" id="matrix-2"></div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Membuat butiran Dot Matrix secara otomatis menggunakan JS loop
+        function createDots(elementId, rows, cols) {
+            const matrix = document.getElementById(elementId);
+            const totalDots = rows * cols;
+            for (let i = 0; i < totalDots; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                matrix.appendChild(dot);
+            }
+        }
+        
+        // Buat dot matrix 5x5 untuk kedua posisi
+        createDots('matrix-1', 5, 5);
+        createDots('matrix-2', 5, 5);
+
+        // 2. Efek Interaktif Klik Judul (Berubah Warna Acak)
+        const title = document.getElementById('main-title');
+        const colors = ['#0b436a', '#ff6b4a', '#2ed573', '#1e90ff'];
+        let colorIndex = 0;
+
+        title.addEventListener('click', () => {
+            colorIndex = (colorIndex + 1) % colors.length;
+            title.style.color = colors[colorIndex];
+        });
+
+        // 3. Efek Alert/Action ketika Nama di-klik
+        const btn = document.getElementById('cta-btn');
+        btn.addEventListener('click', () => {
+            alert('Halo! Selamat datang di portofolio saya.');
+        });
+    </script>
+</body>
+</html>
